@@ -1,15 +1,19 @@
 var brain = {
-    "building": {
-        "page": "README.md",
-        "section": "building"
+    "api": {
+        "page": "API-Documentation",
+        "section": "api-docs"
     },
-    "translations": {
-        "page": "README.md",
-        "section": "translations"
+    "sharedcomponents": {
+        "page": "Shared-Components",
+        "section": "shared-components"
+    },
+    "links": {
+        "page": "Useful-Links",
+        "section": "useful-links"
     },
     "gettingstarted": {
-        "page": "README.md",
-        "section": "building"
+        "page": "Getting-Started",
+        "section": "getting-started"
     }
 };
 
