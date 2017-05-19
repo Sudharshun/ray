@@ -1,16 +1,16 @@
 #### Whats a Bot
 <br>
-<span style="color:gray">Markdown Presentations For Everyone</span>
-<br>
-<span style="color:gray">on</span>
-<br>
-<span style="color:gray">GitHub, GitLab and Bitbucket</span>
-
+<span style="color:gray">Bots are applications that can send and receive messages, and in many cases, appear alongside their human counterparts as users.
+<br/>Some bots talk like people, others silently work in the background, while others present interfaces much like modern mobile applications</span>
 ---
 
 ### Whats the Slack bot
 <br>
-<span style="color:gray; font-size:0.6em;">[ JUST LIKE THIS ONE ]</span>
+<span style="color:gray; font-size:0.6em;">One that lives and thrives on Slack and has conversations with us on slack.
+We use the below framework as its pretty straightforward to get started.<br/>
+</span>
+
+    git clone git@github.com:howdyai/botkit.git
 
 ---
 
