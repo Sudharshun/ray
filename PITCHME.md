@@ -2,6 +2,7 @@
 <br>
 <span style="color:gray">Bots are applications that can send and receive messages, and in many cases, appear alongside their human counterparts as users.
 <br/>Some bots talk like people, others silently work in the background, while others present interfaces much like modern mobile applications</span>
+
 ---
 
 ### Whats the Slack bot
@@ -15,50 +16,71 @@ We use the below framework as its pretty straightforward to get started.<br/>
 ---
 
 ### Getting the Bot registered
-### No more <span style="color: #666666">Powerpoint.</span>
-<br>
-### Just <span style="color: #e49436">Markdown</span>. Then <span style="color: #e49436">Git-Commit</span>.
+
+<span style="color:gray; font-size:0.6em;">On Slack click on Custom Integrations create a Bot,  get a Token<br/>
+<br/>Get a Token , this will enable your Bot to talk to slack, this token is to be handled with care and never checked into <br>
+or something like that.
+</span>
 
 ---
+
 ### Getting a Raspberry Pi in shape for your Bot
-<span style="color: #e49436">STEP 1. PITCHME.md</span>
+<span style="color: #e49436">
+- Get yourself a Raspberry Pi
+- Get yourself setup on Raspberry pi - u can either use putty, or a modified Lapdock or a regular TV to interface
+- Rev up Node on the Raspberry Pi ships with a really old version
+</span>
 
-![MARKDOWN](https://d1z75bzl1vljy2.cloudfront.net/hello-world/markdown.png)
-
-Create GitPitch slideshow content using GitHub flavored Markdown in your favorite editor.
+    git clone https://github.com/Sudharshun/ray.git
 
 ---
 ### Having a Conversation
 
-<span style="color: #e49436">STEP 2. GIT-COMMIT</span>
+Getting Things going
 
-![TERMINAL](https://d1z75bzl1vljy2.cloudfront.net/hello-world/terminal.png)
+    var controller = Botkit.slackbot({
+        //  debug: true,
+    });
 
-Git-commit on any branch and push your PITCHME.md to GitHub, GitLab or Bitbucket.
+    var bot = controller.spawn({
+        token: process.env.token
+    }).startRTM();
+
+Responding to Messages in the Channel
+
+    controller.hears(['dilbert'], 'direct_message,direct_mention,mention', function (bot, message) {
+
+    var rightNow = new Date();
+    var dateinformat = rightNow.toISOString().slice(0, 10).replace(/-/g, "");
+    bot.reply(message, "http://dilbert.com/strip/" + dateinformat);
+    });
 
 ---
 ### Sending messages
 
-<span style="color: #e49436">STEP 3. GET THE WORD OUT!</span>
+    var twilioclient = twilio('something secret', 'something else secret');
+    
 
-<br>
-
-<span style="font-size: 1.3em;"><span style="color:white">htt</span><span style="color:white">ps://git</span><span style="color: #e49436">pitch</span><span style="color: white">.com/<span style="color: #e49436">user</span>/<span style="color: #e49436">repo</span>/<span style="color: #e49436">branch</span></span>
-
-<br>
-
-Instantly use your GitPitch slideshow URL to promote, pitch or present absolutely anything.
-
+	try{
+       twilioclient.sendMessage({
+         to: 'tonumber',
+         from: 'twilionumber',
+         body: 'System Down :'+whatsdown
+        });
+		}catch(e){
+        console.log('Something bad happened');
+		}
 ---
 ### Having your bot speak
 
-<span style="color: #e49436">GIT</span>PITCH DESIGNED FOR SHARING
+    var say = require('say'); 
 
-![SOCIAL](https://d1z75bzl1vljy2.cloudfront.net/hello-world/gp-social.jpg)
+     say.speak(currentUserName + ' says ' + what, 'Good News', 1.0, function (err) {
+                if (err) {
+                    console.error(err);
+                    //    return bot.reply(message, 'Couldnt Inform the Folks!!!');
+                }
+                return bot.reply(message, 'I Informed our people!!!');
 
-- View any slideshow at its public URL
-- Promote any slideshow using a GitHub badge
-- Embed any slideshow within a blog or website
-- Share any slideshow on Twitter, LinkedIn, etc
-- Print any slideshow as a PDF document
-- Download and present any slideshow offline
+
+---
