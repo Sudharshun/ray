@@ -11,7 +11,7 @@ var gitreponame;
 
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
-//twilio client instantiation
+var twilioclient = twilio('AC72dfc9a5dd90f50ab50ee36762053fcd', '44eb5a5b994dbfa05ce236051556d488');
 
 var controller = Botkit.slackbot({
     //  debug: true,
@@ -22,6 +22,12 @@ var bot = controller.spawn({
 }).startRTM();
 
 var gitrepo = process.env.gitrepo;
+
+if(gitrepo){
+gitreponame=gitrepo;
+}
+
+
 console.log('Git Repo set to :', gitrepo);
 
 controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function (bot, message) {
@@ -45,32 +51,6 @@ controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', funct
         }
     });
 });
-
-controller.hears(['setgit (.*)', 'setrepo (.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
-
-    var reponame = message.match[1];
-
-    console.log('Repo name is ',reponame);
-        controller.storage.users.save({id: 'BOT_STORE_USER', repo:reponame}, function (err, msg) {
-            console.log('Repo name insaide save ',reponame);
-            gitreponame=reponame;
-            bot.reply(message, 'Stored Repo as  ' + reponame + ' !');
-        });
-});
-
-controller.hears(['whichgit', 'gitname'], 'direct_message,direct_mention,mention', function (bot, message) {
-
-    controller.storage.users.get("BOT_STORE_USER", function (err, data) {
-        console.log('team name is ',data);
-        if (data && data.repo) {
-            bot.reply(message, 'Repo Name is  ' + data.repo + '!!');
-        } else {
-            bot.reply(message, 'No Repo Set!');
-        }
-    });
-});
-
-
 
 controller.hears(['call me (.*)', 'my name is (.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
     var name = message.match[1];
@@ -328,14 +308,15 @@ controller.hears(['stuffs broken', 'broken arrow', 'system down'], 'direct_messa
 
                             console.log("env Data ",whatsdown);
 
-
-                            say.speak(whatsdown +' is Down');
-
-                            twilioclient.sendMessage({
+			    try{
+                             twilioclient.sendMessage({
                                 to: '8475942450',
                                 from: '(224) 249-3154',
                                 body: 'System Down :'+whatsdown
                             });
+			    }catch(e){
+                            console.log('Something bad happened');
+			    }
 
 
                         } else {
@@ -348,18 +329,3 @@ controller.hears(['stuffs broken', 'broken arrow', 'system down'], 'direct_messa
 
 
 });
-
-
-function getRepository(){
-    if(!gitreponame){
-        controller.storage.users.get("BOT_STORE_USER", function (err, data) {
-            console.log('team name is ',data);
-            if (data && data.repo) {
-                gitreponame=data.repo;
-            } else {
-                gitreponame= 'Couldnt Find Wiki - but link should be under- '
-            }
-        });
-    }
-    return gitreponame;
-}
